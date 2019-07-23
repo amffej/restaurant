@@ -1,0 +1,6 @@
+#IGNORE THE SESSIONS FOLDER
+
+
+# IGNORE PYTHON COMPILED FILES
+__pycache__/
+*.py[cod]
