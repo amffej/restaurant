@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import entree, size, category, addon, addonLimits
+from .models import Entree, Size, Category, Addons, AddonLimits
 
-admin.site.register(entree)
-admin.site.register(size)
-admin.site.register(category)
-admin.site.register(addon)
-admin.site.register(addonLimits)
+admin.site.register(Entree)
+admin.site.register(Size)
+admin.site.register(Category)
+admin.site.register(Addons)
+admin.site.register(AddonLimits)
 
