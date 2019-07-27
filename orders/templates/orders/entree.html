@@ -5,13 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1>TODO</h1>
+    <h1>{{ entree}}</h1>
+    <h2>{{ entree.price}}</h2>
    <ul>
-   
-    {% for entree in entrees %}
+    {% for addon in addons %}
         <li>
-             {{ entree.category }} | Type: {{ entree.name }} | Size: {{ entree.size }} <br>
-              
+             {{ addon.name }}    
         </li>
         
     {% endfor %} 
