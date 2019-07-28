@@ -9,14 +9,13 @@
 {% for main in entree %}
     <!--h1>{{ main}}</h1-->
     {% if forloop.first %}
-        <h2>{{main.category}}</h2>
-        <table class="table">
+        <h2 class="text-center">{{main.category}}</h2>
+        <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col"></th>
-      <th scope="col">Size</th>
-      <th scope="col">Price</th>
-      <th scope="col">4</th>
+      <th scope="col" class="text-center">Option</th>
+      <th scope="col" class="text-center">Size</th>
+      <th scope="col" class="text-center">Price</th>
     </tr>
   </thead>
     <tbody>
@@ -24,10 +23,9 @@
 
         
     <tr>
-      <th scope="row">{% ifchanged main.name %}{{ main.name}}{% endifchanged %}</th>
-      <td>{{ main.size}}</td>
-      <td>{{ main.price}}</td>
-      <td>Configure</td>
+      <th scope="row" class="table-row small text-center font-weight-bold p-1" data-href="#">{% ifchanged main.name %}{{ main.name}}{% endifchanged %}</th>
+      <td class="table-row small text-center p-1" data-href="#">{{ main.size}}</td>
+      <td class="table-row small text-center p-1" data-href="#">${{ main.price}}</td>
     </tr>
 
     {% for addon in addons %}
