@@ -5,9 +5,31 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ entree}}</h1>
-    <h2>{{ entree.price}}</h2>
-   <ul>
+  
+{% for main in entree %}
+    <!--h1>{{ main}}</h1-->
+    {% if forloop.first %}
+        <h2>{{main.category}}</h2>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Size</th>
+      <th scope="col">Price</th>
+      <th scope="col">4</th>
+    </tr>
+  </thead>
+    <tbody>
+    {%endif%}
+
+        
+    <tr>
+      <th scope="row">{% ifchanged main.name %}{{ main.name}}{% endifchanged %}</th>
+      <td>{{ main.size}}</td>
+      <td>{{ main.price}}</td>
+      <td>Configure</td>
+    </tr>
+
     {% for addon in addons %}
         <li>
              {{ addon.name }}    
@@ -15,4 +37,8 @@
         
     {% endfor %} 
     </ul>
+{% endfor %} 
+  </tbody>
+</table>
+
 {% endblock %}

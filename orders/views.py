@@ -26,13 +26,23 @@ def index(request):
 @login_required
 def index(request):
     context = {
-        "entrees": Category.objects.values('name'),
-        "highPrice": Entree.objects.all().aggregate(Max('price')),
-        "lowPrice": Entree.objects.all().aggregate(Min('price'))
+        #"entrees": Category.objects.values('name'),
+        "entrees": Category.objects.all()
+        #"highPrice": Entree.objects.all().aggregate(Max('price')),
+        #"lowPrice": Entree.objects.all().aggregate(Min('price'))
     }
     return render(request, "orders/index.html", context)
 
 def entree(request, entree_id):
+    try:
+        entree = Entree.objects.filter(category=entree_id)
+    except Entree.DoesNotExist:
+        raise Http404("Entree does not exist")
+    context = {
+        "entree": entree,
+        #"addons": entree.addons.all()
+    }   
+    '''
     try:
         entree = Entree.objects.get(pk=entree_id)
     except Entree.DoesNotExist:
@@ -41,6 +51,7 @@ def entree(request, entree_id):
         "entree": entree,
         "addons": entree.addons.all()
     }
+    '''
     return render(request, "orders/entree.html", context)
 
 def register(request):

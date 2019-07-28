@@ -19,27 +19,30 @@
                   
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                      
+                      <li class="nav-item {% if request.path == "/" %} active {% endif %}">
+                          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
                     {% if user.is_authenticated %}
-                        <li class="nav-item active">
+                        <li class="nav-item">
                           <a class="nav-link" href="{% url 'logout' %}?next=/">Logout<span class="sr-only">(current)</span></a>
                         </li>
                     {% endif %}
-                        <li class="nav-item active">
-                          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">My Orders</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="about.html">About Me</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="hobbies.html">Hobbies</a>
+                                <a class="nav-link" href="#">Admin Panel</a>
                               </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="contact.html">Contact Me</a>
+                          <a class="nav-link" href="#">My Cart - $14.99</a>
                         </li>
                       </ul>
                     </div>
                 </nav>
-        <div class= "container mt-2">        
+        <div class= "container mt-2">      
         {% block body %}
         {% endblock %}
         </div>
