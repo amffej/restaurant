@@ -1,0 +1,17 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    SIGN IN PAGE
+{% endblock %}
+
+{% block body %}
+
+  <form method="POST" >
+  {% csrf_token %}
+  {{ form.as_p}}
+  <button type="submit">register</button>
+  </form>
+
+  If you have an account, <a href="{% url 'login' %}">Login</a> instead.
+
+{% endblock %}

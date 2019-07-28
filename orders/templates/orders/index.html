@@ -5,15 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>TODO</h1>
-   <ul>
-   
+ <div class="row">
     {% for entree in entrees %}
-        <li>
-             {{ entree.category }} | Type: {{ entree.name }} | Size: {{ entree.size }} <br>
-              
-        </li>
+         <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ entree.name }}</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+
         
     {% endfor %} 
-    </ul>
+</div>
 {% endblock %}
+
+
+
+
+
