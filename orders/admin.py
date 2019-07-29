@@ -1,12 +1,12 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Entree, Size, Category, Addon, AddonLimit
+from .models import Item, Size, Category, Addon, AddonLimit
 
-class entreeAdmin(admin.ModelAdmin):
+class itemAdmin(admin.ModelAdmin):
     filter_horizontal = ("addons",)
 
-admin.site.register(Entree, entreeAdmin)
+admin.site.register(Item, itemAdmin)
 admin.site.register(Size)
 admin.site.register(Category)
 admin.site.register(Addon)

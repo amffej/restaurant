@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
-from .models import Entree, Category
+from .models import Item, Category
 from .forms import SignUpForm 
 
 # Create your views here.
@@ -36,7 +36,7 @@ def index(request):
 
 def item(request, item_id):
     try:
-        item = Entree.objects.get(pk=item_id)
+        item = Item.objects.get(pk=item_id)
     except item.DoesNotExist:
         raise Http404("Entree does not exist")
     context = {
@@ -47,7 +47,7 @@ def item(request, item_id):
 
 def category(request, cat_id):
     try:
-        category = Entree.objects.filter(category=cat_id) #GET ALL ITEMS FROM GIVEN CATEGORY #TODO NEED TO CHANGE MODEL FOR ENTREE TO ITEM
+        category = Item.objects.filter(category=cat_id) #GET ALL ITEMS FROM GIVEN CATEGORY 
     except category.DoesNotExist:
         raise Http404("Entree does not exist")
     context = {

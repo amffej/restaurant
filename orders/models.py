@@ -15,7 +15,8 @@ class Category(models.Model):
 
 class Addon(models.Model):
     name = models.CharField(max_length=30)
-
+    price = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
+    
     def __str__(self):
         return f"{self.name}"
 
@@ -25,8 +26,9 @@ class AddonLimit(models.Model):
     def __str__(self):
         return f"{self.limit}"
 
-class Entree(models.Model):
+class Item(models.Model):
     name = models.CharField(max_length=30)
+    description = models.CharField(help_text="Max of 250 Characters", max_length=250)
     price = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
