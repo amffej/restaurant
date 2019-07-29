@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-TODO
+{{ item.category }} - {{ item.name }} ({{ item.size }}) 
 {% endblock %}
 
 {% block body %}
@@ -12,27 +12,39 @@ TODO
             if (document.form1.ckb[i].checked) {
                 total = total + 1;
             }
-            if (total > {{ item.addonLimit }}) {
+            if (total > {{ item.addonLimit }
+        }) {
             alert("Please Select only {{ item.addonLimit }}")
             document.form1.ckb[j].checked = false;
             return false;
         }
     }
-}
+};
 </script>
-<h1>{{ item }}</h1>
-<h2>{{ item.price}}</h2>
-<form name=form1 method=post action="">
-    <ul>
+<div class="card text-center">
+    <div class="card-header">
+        <h2>{{ item.category }} - {{ item.name }} ({{ item.size }}) </h2>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ item.description}}</h5>
+        <form name=form1 method=post action="">
+            {% for addon in addons %}
+            <div class="form-check form-check-inline">
+                <input id="checkbox-{{ addon.pk}}" class="form-check-input" type=checkbox name=ckb value="{{ addon.pk}}"
+                    onclick='chkcontrol({{ forloop.counter0 }})' ;>
+                <label class="form-check-label" for="checkbox-{{ addon.pk}}"> {{ addon.name }}</label>
+            </div>
+            {% endfor %}
+            <div class="mt-4"> 
+                <h5>Price: ${{ item.price}}</h5>
+            </div>
 
-        {% for addon in addons %}
-        <div class="form-check form-check-inline">
-            <input id="checkbox-{{ addon.pk}}" class="form-check-input" type=checkbox name=ckb value="{{ addon.pk}}"
-                onclick='chkcontrol({{ forloop.counter0 }})' ;>
-            <label class="form-check-label" for="checkbox-{{ addon.pk}}"> {{ addon.name }}</label>
-        </div>
-        {% endfor %}
-        
-    </ul>
-</form>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+        <a href="#" class="btn btn-success">Add to cart!</a>
+    </div>
+</div>
+
+
 {% endblock %}

@@ -7,23 +7,6 @@ from django.db.models import Max, Min, Count
 from .models import Item, Category
 from .forms import SignUpForm 
 
-# Create your views here.
-'''
-def index(request):
-    entrees = Entree.objects.get(pk=5)
-    yooo = entrees.addons.all()
-    x = []
-    for item in yooo:
-        x.append(item.name)
-    #context = {
-     #   "Entrees": entrees.name,
-        #"Addons": addons
-    #}
-    #print("hello")
-    #return render(request, "orders/index.html", context)
-    return HttpResponse("Project 3: TODO")
-'''
-# Create your views here.
 @login_required
 def index(request):
     context = {
@@ -34,6 +17,7 @@ def index(request):
     }
     return render(request, "orders/index.html", context)
 
+@login_required
 def item(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
@@ -45,6 +29,7 @@ def item(request, item_id):
     }   
     return render(request, "orders/item.html", context)
 
+@login_required
 def category(request, cat_id):
     try:
         category = Item.objects.filter(category=cat_id) #GET ALL ITEMS FROM GIVEN CATEGORY 
