@@ -40,6 +40,13 @@ def category(request, cat_id):
     }   
     return render(request, "orders/category.html", context)
 
+@login_required
+def orders(request):
+    context = {
+        "category": "none"
+    }   
+    return render(request, "orders/orders.html", context)
+
 def register(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
