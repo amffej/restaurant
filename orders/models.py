@@ -9,7 +9,8 @@ class Size(models.Model):
 
 class Category(models.Model):
     name = models.CharField(unique=True, max_length=20)
-
+    #TODO ADD DESCRIPTION HERE
+    
     def __str__(self):
         return f"{self.name}"
 

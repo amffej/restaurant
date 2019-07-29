@@ -2,61 +2,67 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-        <script>
-        $(document).ready(function($) {
-    $(".table-row").click(function() {
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function ($) {
+      $(".table-row").click(function () {
         window.document.location = $(this).data("href");
+      });
     });
-});
-</script>      
-        <style>
-        .table-row{
-cursor:pointer;
-}
+  </script>
+  <style>
+    .table-row {
+      cursor: pointer;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-        </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-                    <a class="navbar-brand" href="index.html">Jeff's Pizza</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                  
-                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                      
-                      <li class="nav-item {% if request.path == "/" %} active {% endif %}">
-                          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-                        </li>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Jeff's Pizza</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'logout' %}?next=/">Logout<span class="sr-only">(current)</span></a>
-                        </li>
-                    {% endif %}
-                        
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">My Orders</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="#">Admin Panel</a>
-                              </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">My Cart - $14.99</a>
-                        </li>
-                      </ul>
-                    </div>
-                </nav>
-        <div class= "container mt-2">      
-        {% block body %}
-        {% endblock %}
-        </div>
-    </body>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+        <li class="nav-item {% if request.path == "/" %} active {% endif %}">
+          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}?next=/">Logout<span class="sr-only">(current)</span></a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">My Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Admin Panel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My Cart - $14.99</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container mt-2">
+    {% block body %}
+    {% endblock %}
+  </div>
+</body>
+
 </html>

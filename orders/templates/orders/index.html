@@ -1,28 +1,21 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-    TODO
+TODO
 {% endblock %}
 
 {% block body %}
- <div class="row">
-    {% for entree in entrees %}
-         <div class="col-sm-6">
+<div class="row">
+  {% for category in categories %}
+  <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ entree.name }}</h5>
-        <p class="card-text">Something here</p>
-        <a href="{% url 'category_url' entree.id %}" class="btn btn-primary">Customize!</a>
+        <h5 class="card-title">{{ category.name }}</h5>
+        <p class="card-text">TODO{{ category.description }}</p>
+        <a href="{% url 'category_url' category.id %}" class="btn btn-primary">Customize!</a>
       </div>
     </div>
   </div>
-
-        
-    {% endfor %} 
+  {% endfor %}
 </div>
 {% endblock %}
-
-
-
-
-

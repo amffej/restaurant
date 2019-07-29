@@ -28,7 +28,7 @@ def index(request):
 def index(request):
     context = {
         #"entrees": Category.objects.values('name'),
-        "entrees": Category.objects.all()
+        "categories": Category.objects.all()
         #"highPrice": Entree.objects.all().aggregate(Max('price')),
         #"lowPrice": Entree.objects.all().aggregate(Min('price'))
     }
