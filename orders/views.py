@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
 from .models import Entree, Category
+from .forms import SignUpForm 
 
 # Create your views here.
 '''
@@ -33,30 +34,30 @@ def index(request):
     }
     return render(request, "orders/index.html", context)
 
-def entree(request, entree_id):
+def item(request, item_id):
     try:
-        entree = Entree.objects.filter(category=entree_id)
-    except Entree.DoesNotExist:
+        item = Entree.objects.get(pk=item_id)
+    except item.DoesNotExist:
         raise Http404("Entree does not exist")
     context = {
-        "entree": entree,
-        #"addons": entree.addons.all()
+        "item": item,
+        "addons": item.addons.all()
     }   
-    '''
+    return render(request, "orders/item.html", context)
+
+def category(request, cat_id):
     try:
-        entree = Entree.objects.get(pk=entree_id)
-    except Entree.DoesNotExist:
+        category = Entree.objects.filter(category=cat_id) #GET ALL ITEMS FROM GIVEN CATEGORY #TODO NEED TO CHANGE MODEL FOR ENTREE TO ITEM
+    except category.DoesNotExist:
         raise Http404("Entree does not exist")
     context = {
-        "entree": entree,
-        "addons": entree.addons.all()
-    }
-    '''
-    return render(request, "orders/entree.html", context)
+        "category": category
+    }   
+    return render(request, "orders/category.html", context)
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -64,5 +65,5 @@ def register(request):
         else:
             for msg in form.error_messages:
                 print(form.error_messages[msg])
-    form = UserCreationForm
+    form = SignUpForm()
     return render(request, "registration/register.html", context={"form":form})
