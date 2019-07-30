@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Size(models.Model):
@@ -22,7 +23,7 @@ class Addon(models.Model):
         return f"{self.name}"
 
 class AddonLimit(models.Model):
-    limit = models. PositiveSmallIntegerField(help_text="How many addons, 0 = none")
+    limit = models.PositiveSmallIntegerField(help_text="How many addons, 0 = none")
 
     def __str__(self):
         return f"{self.limit}"
@@ -39,3 +40,17 @@ class Item(models.Model):
     
     def __str__(self):
         return f"{self.size} {self.name} {self.category} - {self.price}"
+
+class Cart(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    addons = models.ManyToManyField(Addon, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.item}"
+
+class Order(models.Model):
+    cartItem = models.ManyToManyField(Cart)
+
+    def __str__(self):
+        return f"Order ID:{self.pk}"

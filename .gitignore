@@ -5,11 +5,11 @@
 ### Django ###
 *.log
 *.pot
-*.pyc
-__pycache__/
+#*.pyc #TODO REMOVE THESE
+# __pycache__/ #TODO REMOVE THESE
 local_settings.py
 #db.sqlite3
-migrations
+#migrations #TODO REMOVE THESE
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -18,7 +18,7 @@ media
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
-*.py[cod]
+#*.py[cod] #TODO REMOVE THESE
 *$py.class
 
 ### VisualStudioCode ###
