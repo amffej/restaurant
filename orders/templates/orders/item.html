@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-{{ item.category }} - {{ item.name }} ({{ item.size }}) 
+{{ item.category }} - {{ item.name }} ({{ item.size }})
 {% endblock %}
 
 {% block body %}
@@ -22,28 +22,30 @@
 };
 </script>
 <div class="card text-center">
-    <div class="card-header">
-        <h2>{{ item.category }} - {{ item.name }} ({{ item.size }}) </h2>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ item.description}}</h5>
-        <form name=form1 method=post action="">
+    <form name=form1 method=post action="{% url 'cart' %}">
+            {% csrf_token %}
+        <div class="card-header">
+            <h2>{{ item.category }} - {{ item.name }} ({{ item.size }}) </h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ item.description}}</h5>
+
+            <input name="item_id" type="hidden" value="{{ item.pk }}">
             {% for addon in addons %}
             <div class="form-check form-check-inline">
-                <input id="checkbox-{{ addon.pk}}" class="form-check-input" type=checkbox name=ckb value="{{ addon.pk}}"
+                <input id="checkbox-{{ addon.pk}}" class="form-check-input" type=checkbox name="addon_id" value="{{ addon.pk}}"
                     onclick='chkcontrol({{ forloop.counter0 }})' ;>
                 <label class="form-check-label" for="checkbox-{{ addon.pk}}"> {{ addon.name }}</label>
             </div>
             {% endfor %}
-            <div class="mt-4"> 
+            <div class="mt-4">
                 <h5>Price: ${{ item.price}}</h5>
             </div>
-
-        </form>
-    </div>
-    <div class="card-footer text-muted">
-        <a href="#" class="btn btn-success">Add to cart!</a>
-    </div>
+        </div>
+        <div class="card-footer text-muted">
+            <button class="btn btn-success" type="submit">Add to cart!</button>
+        </div>
+    </form>
 </div>
 
 

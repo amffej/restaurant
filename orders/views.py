@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
-from .models import Item, Category
-from .forms import SignUpForm 
+from .models import Item, Category, Cart
+from .forms import SignUpForm
 
 @login_required
 def index(request):
@@ -39,6 +39,26 @@ def category(request, cat_id):
         "category": category
     }   
     return render(request, "orders/category.html", context)
+
+@login_required
+def cart(request): 
+    if request.method == "POST":
+        item_id = int(request.POST.get("item_id"))
+        addons_id = request.POST.getlist("addon_id")
+        # perform conversion 
+        for i in range(0, len(addons_id)): 
+            addons_id[i] = int(addons_id[i]) 
+        data = Cart(item_id = item_id, user = request.user)
+        data.save()
+        data.addons.add(*addons_id)
+    try:
+        cartObjects = Cart.objects.filter(user=request.user)
+    except cartObjects.DoesNotExist:
+        raise Http404("Cart does not exist")
+    context = {
+        "cartObjects": cartObjects
+    }        
+    return render(request, "orders/cart.html", context)
 
 @login_required
 def orders(request):

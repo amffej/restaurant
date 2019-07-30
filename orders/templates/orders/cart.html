@@ -1,0 +1,43 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+TODO
+{% endblock %}
+
+{% block body %}
+<div class='table-responsive'>
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Item #</th>
+      <th scope="col">Description</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  {% for cartitem in cartObjects %}
+  <tbody>
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ cartitem.item.category }} - {{ cartitem.item.name }} ({{ cartitem.item.size }})</td>
+      <td>${{ cartitem.item.price }}</td>
+    </tr>
+    {% if cartitem.addons.all %}
+    <tr>
+      <th scope="row" class="text-right small">Addons</th>
+      <td>{% for addon in cartitem.addons.all %} {{ addon.name }} | {% endfor %} </td>
+      <td></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    <tr>
+        <th scope="row"></th>
+        <td class="text-right">Total:</td>
+        <td>$xx.xx</td>
+      </tr>
+  </tbody>
+</table>
+</div>
+Addons free: {{ cartitem.item.addon_free }} <br>
+Free Addons: {{ cartitem.item.addonLimit}}
+
+{% endblock %}
