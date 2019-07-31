@@ -51,17 +51,11 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.user} - {self.item}" 
 
-class OrderStatus(models.Model):
-    status = models.CharField(max_length=20)
-
-    def __str__(self):
-        return f"{self.status}" 
-
 class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cartItem = models.ManyToManyField(Cart)
-    orderStatus = models.ForeignKey(OrderStatus, null=True, blank=True, on_delete=models.CASCADE)
+    orderComplete = models.BooleanField(default=False)
     orderTotal = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
     
     def __str__(self):

@@ -29,7 +29,12 @@ TODO
         {% endfor %}
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>
-      <td class="small">{% if order.orderStatus %}{{ order.orderStatus }}{% endif %}</td>
+      <td class="small">{% if order.orderComplete %}
+        order complete!!  
+        {% else %}
+        <a href="{% url 'order_complete' order.pk %}" class="btn btn-small btn-success" role="button">Mark Complete</a>
+        {% endif %}
+        </td>
     </tr>
     {% endfor %}
   </tbody>

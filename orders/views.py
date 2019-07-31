@@ -77,6 +77,12 @@ def cart_remove(request, item_id):
     return redirect(cart)
 
 @login_required
+def order_complete(request, order_id):
+    order = Order.objects.filter(pk = order_id) 
+    order.update(orderComplete = True)       
+    return redirect(orders_admin)    
+
+@login_required
 def checkout(request):
     if request.method == "POST":
             try:
@@ -110,11 +116,16 @@ def orders(request):
     return render(request, "orders/orders.html", context)
 
 @login_required
-def orders_admin(request):
+def orders_admin(request): 
+           #order_id = int(request.POST.get("order_id"))
+           #order_status = request.POST.get("status_id")  
+           #
+           #order_data.add(form) 
     try:
         OrderObjects = Order.objects.all()
     except OrderObjects.DoesNotExist:
-        raise Http404("Cart does not exist")    
+        raise Http404("Cart does not exist")  
+    
     context = {
         "orders":  OrderObjects,
     }   

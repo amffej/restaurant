@@ -25,7 +25,12 @@ TODO
           {% endfor %}
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>
-      <td class="small">{% if order.orderStatus %}{{ order.orderStatus }}{% endif %}</td>
+      <td class="small"><td class="small">{% if order.orderComplete %}
+          Complete  
+          {% else %}
+          In progress!
+          {% endif %}
+          </td>
     </tr>
     {% endfor %}
   </tbody>
