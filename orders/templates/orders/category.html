@@ -5,19 +5,18 @@ Menu Items
 {% endblock %}
 
 {% block body %}
-
 {% for main in category %}
-  {% if forloop.first %}
-  <h2 class="text-center">{{main.category}}</h2>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col" class="text-center">Option</th>
-        <th scope="col" class="text-center">Size</th>
-        <th scope="col" class="text-center">Price</th>
-      </tr>
-    </thead>
-    <tbody>
+{% if forloop.first %}
+<h2 class="text-center">{{main.category}}</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center">Option</th>
+      <th scope="col" class="text-center">Size</th>
+      <th scope="col" class="text-center">Price</th>
+    </tr>
+  </thead>
+  <tbody>
     {%endif%}
     <tr>
       <th scope="row" class="table-row small text-center font-weight-bold p-1" data-href="{% url 'item_url' main.id %}">
@@ -26,10 +25,9 @@ Menu Items
       <td class="table-row small text-center p-1" data-href="{% url 'item_url' main.id %}">${{ main.price}}</td>
     </tr>
     {% for addon in addons %}
-      {{ addon.name }}<br>
+    {{ addon.name }}<br>
     {% endfor %}
-{% endfor %}
+    {% endfor %}
   </tbody>
 </table>
-
 {% endblock %}
