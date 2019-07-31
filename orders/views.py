@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
-from .models import Item, Category, Cart, Addon
+from .models import Item, Category, Cart, Addon, Order
 from .forms import SignUpForm
 
 @login_required
@@ -51,11 +51,12 @@ def cart(request):
             addons_id[i] = int(addons_id[i]) 
             addon_object = Addon.objects.get(pk=addons_id[i])
             addon_total += addon_object.price
+        addon_total = 0    
         data = Cart(item_id = item_id, user = request.user, addons_total = addon_total)
         data.save()
         data.addons.add(*addons_id)
     try:
-        cartObjects = Cart.objects.filter(user=request.user)
+        cartObjects = Cart.objects.filter(user=request.user, ordered=False)
     except cartObjects.DoesNotExist:
         raise Http404("Cart does not exist")
     #get order total
@@ -76,11 +77,45 @@ def cart_remove(request, item_id):
     return redirect(cart)
 
 @login_required
+def checkout(request):
+    if request.method == "POST":
+        try:
+            cartObjects = Cart.objects.filter(user=request.user, ordered=False)
+        except cartObjects.DoesNotExist:
+            raise Http404("Cart does not exist")
+        #get order total
+        orderTotal = 0
+        for cartObject in cartObjects:
+            orderTotal += cartObject.item.price
+            if not cartObject.item.addon_free:
+                orderTotal += cartObject.addons_total     
+        order_data = Order(orderTotal = orderTotal, user = request.user)
+        order_data.save()
+        order_data.cartItem.add(*cartObjects)
+        cartObjects.update(ordered=True)
+    return redirect(cart)
+
+@login_required
 def orders(request):
+    try:
+        OrderObjects = Order.objects.filter(user=request.user)
+    except OrderObjects.DoesNotExist:
+        raise Http404("Cart does not exist")    
     context = {
-        "category": "none",
+        "orders":  OrderObjects,
     }   
     return render(request, "orders/orders.html", context)
+
+@login_required
+def orders_admin(request):
+    try:
+        OrderObjects = Order.objects.all()
+    except OrderObjects.DoesNotExist:
+        raise Http404("Cart does not exist")    
+    context = {
+        "orders":  OrderObjects,
+    }   
+    return render(request, "orders/orders_admin.html", context)
 
 def register(request):
     if request.method == "POST":

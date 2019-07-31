@@ -50,11 +50,11 @@
         <li class="nav-item {% if request.path == "/orders/" %} active {% endif %}">
           <a class="nav-link" href="{% url 'orders' %}">My Orders</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Admin Panel</a>
+        <li class="nav-item {% if request.path == "/orders_admin/"  %} active {% endif %}">
+          <a class="nav-link" href="{% url 'orders_admin' %}">Admin Panel</a>
         </li>
         <li class="nav-item {% if request.path == "/cart/" %} active {% endif %}">
-          <a class="nav-link" href="{% url 'cart' %}">My Cart - $14.99</a>
+          <a class="nav-link" href="{% url 'cart' %}">My Cart</a>
         </li>
       </ul>
     </div>

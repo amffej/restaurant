@@ -6,43 +6,47 @@ TODO
 
 {% block body %}
 <div class='table-responsive'>
-  <table class="table table-hover table-sm">
-    <thead>
-      <tr>
-        <th scope="col">Item #</th>
-        <th scope="col">Description</th>
-        <th scope="col">Total</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    {% for cartitem in cartObjects %}
-    <tbody>
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ cartitem.item.category }} - {{ cartitem.item.name }} ({{ cartitem.item.size }})</td>
-        <td>${{ cartitem.item.price }}</td>
-        <td><a href="/cart_rm/{{ cartitem.pk }}" role="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </a></td>
-      </tr>
-      {% if cartitem.addons.all %}
-      <tr>
-        <th scope="row" class="text-right small">Addons</th>
-        <td>{% for addon in cartitem.addons.all %} {{ addon.name }} | {% endfor %} </td>
-        <td>{% if cartitem.item.addon_free %} $ 0.00 {% else %} $ {{ cartitem.addons_total }} {% endif %}</td>
-      </tr>
-      {% endif %}
-      <!--Addons free: {{ cartitem.item.addon_free }} <br>
+  <form name=cartform method=post action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <table class="table table-hover table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Item #</th>
+          <th scope="col">Description</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      {% for cartitem in cartObjects %}
+      <tbody>
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ cartitem.item.category }} - {{ cartitem.item.name }} ({{ cartitem.item.size }})</td>
+          <td>${{ cartitem.item.price }}</td>
+          <td><a href="/cart_rm/{{ cartitem.pk }}" role="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </a></td>
+        </tr>
+        {% if cartitem.addons.all %}
+        <tr>
+          <th scope="row" class="text-right small">Addons</th>
+          <td>{% for addon in cartitem.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %} </td>
+          <td>{% if cartitem.item.addon_free %} $ 0.00 {% else %} $ {{ cartitem.addons_total }} {% endif %}</td>
+        </tr>
+        {% endif %}
+        Addons free: {{ cartitem.item.addon_free }} <br>
       Free Addons: {{ cartitem.item.addonLimit}}
-      -->
-      {% endfor %}  
-      <tr>
-        <th scope="row"></th>
-        <td class="text-right">Total:</td>
-        <td>$ {{ orderTotal }} </td>
-      </tr>
-    </tbody>
-  </table>
+      
+        {% endfor %}
+        <tr>
+          <th scope="row"></th>
+          <td class="text-right">Total:</td>
+          <td>$ {{ orderTotal }} </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-success btn-lg btn-block">Checkout!</button>
+  </form>
 </div>
-<button type="button" class="btn btn-success btn-lg btn-block">Checkout!</button>
+
 {% endblock %}

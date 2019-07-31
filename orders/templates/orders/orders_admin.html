@@ -8,6 +8,7 @@ TODO
 <table class="table table-hover table-sm">
   <thead>
     <tr>
+      <th scope="col">ID</th>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
       <th scope="col">Total</th>
@@ -17,10 +18,12 @@ TODO
   <tbody>
   {% for order in orders %}
     <tr>
-      <th scope="row" class="small">{{ order.date }}</th>
+      <th scope="row" class="small">{{ order.pk }}</th>
+      <td class="small">{{ order.date }}</td>
       <td class="small">
         {% for Item in order.cartItem.all %}
-        {{ Item.item.category }}{{ Item.item.name }}({{ Item.item.size }})<br>
+        <strong>{{ Item.item.category }}{{ Item.item.name }}({{ Item.item.size }})</strong><br>
+        {% for addon in Item.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %}<br>
         {% endfor %}
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>

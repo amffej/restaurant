@@ -46,12 +46,23 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     addons = models.ManyToManyField(Addon, null=True, blank=True)
     addons_total = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user} - {self.item}" 
 
-class Order(models.Model):
-    cartItem = models.ManyToManyField(Cart)
+class OrderStatus(models.Model):
+    status = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.status}" 
+
+class Order(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cartItem = models.ManyToManyField(Cart)
+    orderStatus = models.ForeignKey(OrderStatus, null=True, blank=True, on_delete=models.CASCADE)
+    orderTotal = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
+    
     def __str__(self):
         return f"Order ID:{self.pk}"
