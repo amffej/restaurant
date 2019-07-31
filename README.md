@@ -1,4 +1,4 @@
-# QuickChat - Simple chat application
+# Restaurant’s online orders
 
 
 ## Objective
