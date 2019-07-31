@@ -45,9 +45,10 @@ class Cart(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     addons = models.ManyToManyField(Addon, null=True, blank=True)
+    addons_total = models.DecimalField(help_text="Price in $US", max_digits=6, decimal_places=2)
 
     def __str__(self):
-        return f"{self.item}"
+        return f"{self.user} - {self.item}" 
 
 class Order(models.Model):
     cartItem = models.ManyToManyField(Cart)

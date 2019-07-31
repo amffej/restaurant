@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
-from .models import Item, Category, Cart
+from .models import Item, Category, Cart, Addon
 from .forms import SignUpForm
 
 @login_required
@@ -45,25 +45,40 @@ def cart(request):
     if request.method == "POST":
         item_id = int(request.POST.get("item_id"))
         addons_id = request.POST.getlist("addon_id")
-        # perform conversion 
+        # perform conversion
+        addon_total = 0  
         for i in range(0, len(addons_id)): 
             addons_id[i] = int(addons_id[i]) 
-        data = Cart(item_id = item_id, user = request.user)
+            addon_object = Addon.objects.get(pk=addons_id[i])
+            addon_total += addon_object.price
+        data = Cart(item_id = item_id, user = request.user, addons_total = addon_total)
         data.save()
         data.addons.add(*addons_id)
     try:
         cartObjects = Cart.objects.filter(user=request.user)
     except cartObjects.DoesNotExist:
         raise Http404("Cart does not exist")
+    #get order total
+    orderTotal = 0
+    for cartObject in cartObjects:
+        orderTotal += cartObject.item.price
+        if not cartObject.item.addon_free:
+            orderTotal += cartObject.addons_total
     context = {
-        "cartObjects": cartObjects
+        "cartObjects": cartObjects,
+        "orderTotal": orderTotal 
     }        
     return render(request, "orders/cart.html", context)
 
 @login_required
+def cart_remove(request, item_id):
+    Cart.objects.filter(pk = item_id).delete()        
+    return redirect(cart)
+
+@login_required
 def orders(request):
     context = {
-        "category": "none"
+        "category": "none",
     }   
     return render(request, "orders/orders.html", context)
 

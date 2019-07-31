@@ -8,5 +8,7 @@ urlpatterns = [
     path("item/<int:item_id>", views.item, name="item_url"),
     path("register/", views.register, name="register"),
     path("orders/", views.orders, name="orders"),
-    path("cart/", views.cart, name="cart")
+    path("cart/", views.cart, name="cart"),
+    #path("cart_rm/<int:cart_item_id>", views.cart_remove, name='cart_remove'),
+    path("cart_rm/<int:item_id>", views.cart_remove, name="cart_remove"),
 ]
