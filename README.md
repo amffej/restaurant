@@ -52,22 +52,8 @@ project3-jeffmaldo27/
 ├── README              # this file
 ├── requirements.txt    # Install requirements
 
-
-│   ├── img/
-│   │   └──  app.png    # Image used in readme
-│   ├── index.js        # Main JavaScript File for the chat
-│   └── style.css       # Custom CSS file
-├── application.py      # Main flask application file
-├── README.md           # This file!
-├── .gitignore          # Git ignore configuration file
-└── requirements.txt    # List required packages
-```
-
 ### Features
 
-* Single page design - All content is loaded within one main page (Personal Touch)
-* Mobile friendly - Automatically hide channels on mobile view. (Personal Touch)
-* Unread message counters - Badge showing unread messages per channel (Personal Touch)
-* Save up to 100 messages per channel
-* User can create custom channels
-* No need to sign in again if browser is closed
+* One central database of unlimited categories and addons
+    * Usefull for any kind of restaurant or shopping cart website
+* Extra feature is administrators ability to mark orders complete
