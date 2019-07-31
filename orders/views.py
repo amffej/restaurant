@@ -10,10 +10,7 @@ from .forms import SignUpForm
 @login_required
 def index(request):
     context = {
-        #"entrees": Category.objects.values('name'),
         "categories": Category.objects.all()
-        #"highPrice": Entree.objects.all().aggregate(Max('price')),
-        #"lowPrice": Entree.objects.all().aggregate(Min('price'))
     }
     return render(request, "orders/index.html", context)
 
@@ -50,8 +47,7 @@ def cart(request):
         for i in range(0, len(addons_id)): 
             addons_id[i] = int(addons_id[i]) 
             addon_object = Addon.objects.get(pk=addons_id[i])
-            addon_total += addon_object.price
-        addon_total = 0    
+            addon_total += addon_object.price   
         data = Cart(item_id = item_id, user = request.user, addons_total = addon_total)
         data.save()
         data.addons.add(*addons_id)
@@ -107,7 +103,7 @@ def checkout(request):
 @login_required
 def orders(request):
     try:
-        OrderObjects = Order.objects.filter(user=request.user)
+        OrderObjects = Order.objects.filter(user=request.user).order_by('-pk')
     except OrderObjects.DoesNotExist:
         raise Http404("Cart does not exist")    
     context = {
@@ -117,12 +113,8 @@ def orders(request):
 
 @login_required
 def orders_admin(request): 
-           #order_id = int(request.POST.get("order_id"))
-           #order_status = request.POST.get("status_id")  
-           #
-           #order_data.add(form) 
     try:
-        OrderObjects = Order.objects.all()
+        OrderObjects = Order.objects.all().order_by('-pk')
     except OrderObjects.DoesNotExist:
         raise Http404("Cart does not exist")  
     

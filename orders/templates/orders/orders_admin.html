@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-TODO
+Restaurant Orders
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,7 @@ TODO
     </tr>
   </thead>
   <tbody>
-  {% for order in orders %}
+    {% for order in orders %}
     <tr>
       <th scope="row" class="small">{{ order.pk }}</th>
       <td class="small">{{ order.date }}</td>
@@ -30,11 +30,11 @@ TODO
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>
       <td class="small">{% if order.orderComplete %}
-        order complete!!  
+        order complete!!
         {% else %}
         <a href="{% url 'order_complete' order.pk %}" class="btn btn-small btn-success" role="button">Mark Complete</a>
         {% endif %}
-        </td>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

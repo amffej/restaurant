@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-TODO
+My Orders
 {% endblock %}
 
 {% block body %}
@@ -15,22 +15,23 @@ TODO
     </tr>
   </thead>
   <tbody>
-  {% for order in orders %}
+    {% for order in orders %}
     <tr>
       <th scope="row" class="small">{{ order.date }}</th>
       <td class="small">
-          {% for Item in order.cartItem.all %}
-          <strong>{{ Item.item.category }} {{ Item.item.name }} ({{ Item.item.size }})</strong><br>
-          {% for addon in Item.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %}<br>
-          {% endfor %}
+        {% for Item in order.cartItem.all %}
+        <strong>{{ Item.item.category }} {{ Item.item.name }} ({{ Item.item.size }})</strong><br>
+        {% for addon in Item.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %}<br>
+        {% endfor %}
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>
-      <td class="small"><td class="small">{% if order.orderComplete %}
-          Complete  
-          {% else %}
-          In progress!
-          {% endif %}
-          </td>
+      <td class="small">
+      <td class="small">{% if order.orderComplete %}
+        Complete
+        {% else %}
+        In progress!
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </tbody>

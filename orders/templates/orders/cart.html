@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-TODO
+Cart
 {% endblock %}
 
 {% block body %}
@@ -34,9 +34,6 @@ TODO
         <td>{% if cartitem.item.addon_free %} $ 0.00 {% else %} $ {{ cartitem.addons_total }} {% endif %}</td>
       </tr>
       {% endif %}
-      Addons free: {{ cartitem.item.addon_free }} <br>
-      Free Addons: {{ cartitem.item.addonLimit}}
-
       {% endfor %}
       <tr>
         <th scope="row"></th>
