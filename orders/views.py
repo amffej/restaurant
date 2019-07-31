@@ -67,7 +67,7 @@ def cart(request):
             orderTotal += cartObject.addons_total
     context = {
         "cartObjects": cartObjects,
-        "orderTotal": orderTotal 
+        "orderTotal": orderTotal,
     }        
     return render(request, "orders/cart.html", context)
 
@@ -79,21 +79,24 @@ def cart_remove(request, item_id):
 @login_required
 def checkout(request):
     if request.method == "POST":
-        try:
-            cartObjects = Cart.objects.filter(user=request.user, ordered=False)
-        except cartObjects.DoesNotExist:
-            raise Http404("Cart does not exist")
-        #get order total
-        orderTotal = 0
-        for cartObject in cartObjects:
-            orderTotal += cartObject.item.price
-            if not cartObject.item.addon_free:
-                orderTotal += cartObject.addons_total     
-        order_data = Order(orderTotal = orderTotal, user = request.user)
-        order_data.save()
-        order_data.cartItem.add(*cartObjects)
-        cartObjects.update(ordered=True)
-    return redirect(cart)
+            try:
+                cartObjects = Cart.objects.filter(user=request.user, ordered=False)
+            except cartObjects.DoesNotExist:
+                raise Http404("Cart does not exist")
+            #get order total
+            orderTotal = 0
+            for cartObject in cartObjects:
+                orderTotal += cartObject.item.price
+                if not cartObject.item.addon_free:
+                    orderTotal += cartObject.addons_total
+            if orderTotal == 0:
+                return redirect(cart)             
+            order_data = Order(orderTotal = orderTotal, user = request.user)
+            order_data.save()
+            order_data.cartItem.add(*cartObjects)
+            cartObjects.update(ordered=True)
+            return redirect(orders)
+    return redirect(cart)      
 
 @login_required
 def orders(request):

@@ -28,7 +28,7 @@
 
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="index.html">Jeff's Pizza</a>
+    <a class="navbar-brand" href="{% url 'index' %}">Jeff's Pizza</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -50,9 +50,11 @@
         <li class="nav-item {% if request.path == "/orders/" %} active {% endif %}">
           <a class="nav-link" href="{% url 'orders' %}">My Orders</a>
         </li>
+        {% if request.user.is_staff %}
         <li class="nav-item {% if request.path == "/orders_admin/"  %} active {% endif %}">
           <a class="nav-link" href="{% url 'orders_admin' %}">Admin Panel</a>
         </li>
+        {% endif %}
         <li class="nav-item {% if request.path == "/cart/" %} active {% endif %}">
           <a class="nav-link" href="{% url 'cart' %}">My Cart</a>
         </li>

@@ -19,9 +19,10 @@ TODO
     <tr>
       <th scope="row" class="small">{{ order.date }}</th>
       <td class="small">
-        {% for Item in order.cartItem.all %}
-        {{ Item.item.category }}{{ Item.item.name }}({{ Item.item.size }})<br>
-        {% endfor %}
+          {% for Item in order.cartItem.all %}
+          <strong>{{ Item.item.category }} {{ Item.item.name }} ({{ Item.item.size }})</strong><br>
+          {% for addon in Item.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %}<br>
+          {% endfor %}
       </td>
       <td class="small">$ {{ order.orderTotal }}</td>
       <td class="small">{% if order.orderStatus %}{{ order.orderStatus }}{% endif %}</td>

@@ -10,6 +10,7 @@ TODO
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Date</th>
+      <th scope="col">User</th>
       <th scope="col">Description</th>
       <th scope="col">Total</th>
       <th scope="col">Status</th>
@@ -20,9 +21,10 @@ TODO
     <tr>
       <th scope="row" class="small">{{ order.pk }}</th>
       <td class="small">{{ order.date }}</td>
+      <td class="small">{{ order.user }}</td>
       <td class="small">
         {% for Item in order.cartItem.all %}
-        <strong>{{ Item.item.category }}{{ Item.item.name }}({{ Item.item.size }})</strong><br>
+        <strong>{{ Item.item.category }} {{ Item.item.name }} ({{ Item.item.size }})</strong><br>
         {% for addon in Item.addons.all %} {{ addon.name }} {% if not forloop.last %}|{% endif %} {% endfor %}<br>
         {% endfor %}
       </td>
